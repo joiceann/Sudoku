@@ -25,4 +25,11 @@ public class AlgoritmoA {
         }
 
     }
+
+    public void actions(){
+
+    }
+    public void sucesor(){
+
+    }
 }
