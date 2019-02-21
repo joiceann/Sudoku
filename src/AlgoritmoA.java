@@ -45,7 +45,6 @@ public class AlgoritmoA {
             }
             estadoInicial.setTablero(finnal);
             estadoInicial.setHeuristica(0);
-            estadoInicial.setManhattan(0);
 
             return true;
         }
@@ -65,11 +64,6 @@ public class AlgoritmoA {
             }
         }
         return vacios;
-    }
-
-    public int calcular_manhattan(Posicion pos){
-      return (pos.getX()+pos.getY());
-
     }
 
     public int calcular_heuristica(Estado estado, Integer num){
@@ -105,49 +99,6 @@ public class AlgoritmoA {
         return estado_menor;
     }
 
-
-
-
-    public ArrayList<Estado> estado_siguiente(Estado estado_actual, int x, int y) {
-        ArrayList<Integer> finales = new ArrayList<>();
-        ArrayList<Integer> temp_y = new ArrayList<>();
-        ArrayList<Integer> temp_x = new ArrayList<>();
-        ArrayList<Estado> posibles_estados= new ArrayList<>();
-        //verificar columnas y filas y guarda en arreglos los numeros que existen en ella
-        for (int i = 0; i < posibles_numeros.length; i++) {
-            for (int j = 0; j < estado_actual.tablero.size(); j++) {
-                if (!temp_y.contains(estado_actual.tablero.get(j).get(y))) {
-                    temp_y.add(estado_actual.tablero.get(j).get(y));
-                }
-
-                System.out.println(estado_actual.tablero.get(x).get(j));
-                if (!temp_x.contains(estado_actual.tablero.get(x).get(j))) {
-                    temp_x.add(estado_actual.tablero.get(x).get(j));
-                }
-            }
-        }
-        /*System.out.println("temp x " + temp_x );
-        System.out.println("temp y " + temp_y );*/
-
-        //verifica si existen los numeros en columnas y filas
-        for (int j = 0; j < posibles_numeros.length; j++) {
-            if (!temp_x.contains(posibles_numeros[j]) && !temp_y.contains(posibles_numeros[j])) {
-                finales.add(posibles_numeros[j]);
-            }
-        }
-        /*System.out.println("Posibles \n"+ finales);*/
-
-        //Calcula la heuristica y la distancia manhattan de todos los estados
-        for (int i=0;i< finales.size();i++){
-            Estado estado_agregar= construir_estado(estado_actual, finales.get(i), x, y);
-            Posicion pos = new Posicion(x,y);
-            guardar_pesos(estado_agregar,finales.get(i),pos);
-            posibles_estados.add(estado_agregar);
-        }
-        return  posibles_estados;
-
-    }
-
     public ArrayList<Integer> buscar_opciones(Estado estado, int x, int y){
         ArrayList<Integer> finales = new ArrayList<>();
         ArrayList<Integer> temp_y = new ArrayList<>();
@@ -173,22 +124,6 @@ public class AlgoritmoA {
         return finales;
     }
 
-
-    public Estado construir_estado(Estado estado_anterior, int nuevo_num, int x, int y){
-        Estado nuevo_estado = new Estado();
-        ArrayList<ArrayList<Integer>> tablero = estado_anterior.getTablero();
-        tablero.get(x).set(y, nuevo_num);
-        nuevo_estado.setTablero(tablero);
-        return nuevo_estado;
-    }
-
-    public void guardar_pesos(Estado estado, int numero, Posicion pos){
-        int heuristica = calcular_heuristica(estado, numero);
-        int manhattan = calcular_manhattan(pos);
-        estado.setHeuristica(heuristica);
-        estado.setManhattan(manhattan);
-        estado.setTotal(manhattan+heuristica);
-    }
 
     public boolean goal(Estado estado){
         for (int i=0; i< estado.tablero.size();i++){
@@ -230,7 +165,7 @@ public class AlgoritmoA {
         ArrayList<Estado> hijos= new ArrayList<>();
         for (int i=0;i< pos.getOpciones().size();i++){
             ArrayList<ArrayList<Integer>> tablero = copiar_tablero( estado_padre.getTablero());
-            tablero.get(pos.getX()).set(pos.getY(), pos.getOpciones().get(i));
+            tablero.get(pos.getY()).set(pos.getX(), pos.getOpciones().get(i));
             Estado temp= new Estado();
             temp.setTablero(tablero);
             temp.setCosto(estado_padre.getCosto()+1);
@@ -241,18 +176,11 @@ public class AlgoritmoA {
         for (int j=0; j<hijos.size();j++){
             int heuristica = calcular_heuristica(hijos.get(j),pos.getOpciones().get(j));
             hijos.get(j).setHeuristica(heuristica);
+
         }
 
         return hijos;
 
-    }
-
-    public void eliminar_estado(ArrayList<Estado> arreglo, Estado estado){
-        for (int i=0;i<arreglo.size(); i++){
-            if (arreglo.get(i).compareTo(estado)==1){
-
-            }
-        }
     }
 
     public Estado A_Star(){
@@ -263,11 +191,25 @@ public class AlgoritmoA {
         while (!abiertos.isEmpty()){
             Estado estado_actual= obtener_menor(abiertos);
             cerrados.add(estado_actual);
+            System.out.println("EL estado actual es ");
+            imprimir_estado(estado_actual);
 
             ArrayList<Posicion> vacios =buscar_vacios(estado_actual);
+            /*System.out.println("Los vacios son ");
+            for (int j=0; j< vacios.size();j++){
+                System.out.println(vacios.get(j).getX() +" and " + vacios.get(j).getY());
+            }*/
+            System.out.println("Los vacios son ");
             for (int i=0;i< vacios.size();i++){
                 ArrayList<Integer> opciones = buscar_opciones(estado_actual, vacios.get(i).getX(), vacios.get(i).getY());
                 vacios.get(i).setOpciones(opciones);
+
+                System.out.println(vacios.get(i).getX() +" and " + vacios.get(i).getY());
+                System.out.print("Con opciones ");
+                for (int m=0;m< vacios.get(i).getOpciones().size();m++){
+                    System.out.print(vacios.get(i).getOpciones().get(m));
+                }
+                System.out.println("");
             }
 
 
@@ -275,25 +217,34 @@ public class AlgoritmoA {
                 //termina
                 return estado_actual;
             }
-            else{
 
+            else{
                 //revisa los hijos
                 ArrayList<Estado> hijos = obtener_hijos(vacios, estado_actual);
 
+                System.out.println("Los hijos que obtiene son ");
                 for (int i=0; i<hijos.size();i++){
-                    //imprimir_estado(hijos.get(i));
                     buscar_vacios(hijos.get(i));
-                    //if (obtener_hijos(vacios, hijos.get(i)).size()>0 || goal(hijos.get(i))){
+                    if (obtener_hijos(vacios, hijos.get(i)).size()>0 || goal(hijos.get(i))){
+                        imprimir_estado(hijos.get(i));
                         abiertos.add(hijos.get(i));
-                    //}
+                    }
                 }
 
-                System.out.println("Verificar los abiertos");
+                ArrayList<Estado> abierto_temp= new ArrayList<>();
+                for (int i=0; i< abiertos.size();i++){
+                    if (abiertos.get(i).compareTo(estado_actual)==0){
+                        abierto_temp.add(abiertos.get(i));
+                    }
+                }
+
+                abiertos = abierto_temp;
+
+                /*System.out.println("Verificar los abiertos");
                 for (int m=0; m<abiertos.size();m++){
                     System.out.println("_________________________________________");
-                    imprimir_estado(abiertos.get(1));
-                }
-
+                    imprimir_estado(abiertos.get(m));
+                }*/
 
             }
         }

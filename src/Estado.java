@@ -4,7 +4,6 @@ public class Estado implements Comparable<Estado>{
     int columnas=4;
     int filas=4;
     int heuristica=1000;
-    int manhattan;
     int total;
     int costo=0;
 
@@ -34,14 +33,6 @@ public class Estado implements Comparable<Estado>{
         this.heuristica = heuristica;
     }
 
-    public int getManhattan() {
-        return manhattan;
-    }
-
-    public void setManhattan(int manhattan) {
-        this.manhattan = manhattan;
-    }
-
     public ArrayList<ArrayList<Integer>> getTablero() {
         return tablero;
     }
@@ -55,9 +46,9 @@ public class Estado implements Comparable<Estado>{
 
         for (int i=0; i<this.tablero.size(); i++){
             for (int j=0; j<this.tablero.get(i).size();j++){
-                System.out.println(this.tablero.get(i).get(j));
+                /*System.out.println(this.tablero.get(i).get(j));
                 System.out.println(o.getTablero().get(i).get(j));
-                if (this.tablero.get(i).get(j) != o.getTablero().get(i).get(j)){
+                */if (this.tablero.get(i).get(j) != o.getTablero().get(i).get(j)){
                     return 0;
                 }
             }

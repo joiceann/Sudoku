@@ -12,7 +12,8 @@ public class Main {
         // Check if a command line argument exists
         if(args.length!=0 ){
             String input = args[0];
-            System.out.println(input.length());
+            //
+            // System.out.println(input.length());
             if (input.length() == 16){
                 System.out.println("Prueba");
                 AlgoritmoA algoritmoA = new AlgoritmoA();
