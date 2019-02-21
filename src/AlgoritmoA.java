@@ -199,6 +199,18 @@ public class AlgoritmoA {
         return true;
     }
 
+    public ArrayList<ArrayList<Integer>> copiar_tablero(ArrayList<ArrayList<Integer>> tablero){
+        ArrayList<ArrayList<Integer>> tablero_nuevo = new ArrayList<>();
+        for (int i=0; i< tablero.size(); i++){
+            ArrayList<Integer> individual= new ArrayList<>();
+            for (int j=0; j<tablero.get(i).size(); j++){
+                individual.add(tablero.get(i).get(j));
+            }
+            tablero_nuevo.add(individual);
+        }
+        return tablero_nuevo;
+    }
+
     public ArrayList<Estado> obtener_hijos (ArrayList<Posicion> vacios, Estado estado_padre){
         int costo=10000;
         int index=0;
@@ -217,7 +229,7 @@ public class AlgoritmoA {
         //obtener los estados posibles en esa casilla
         ArrayList<Estado> hijos= new ArrayList<>();
         for (int i=0;i< pos.getOpciones().size();i++){
-            ArrayList<ArrayList<Integer>> tablero = estado_padre.getTablero();
+            ArrayList<ArrayList<Integer>> tablero = copiar_tablero( estado_padre.getTablero());
             tablero.get(pos.getX()).set(pos.getY(), pos.getOpciones().get(i));
             Estado temp= new Estado();
             temp.setTablero(tablero);
@@ -248,11 +260,9 @@ public class AlgoritmoA {
         ArrayList<Estado> abiertos= new ArrayList<>();
         abiertos.add(estadoInicial);
 
-
         //while (!abiertos.isEmpty()){
             Estado estado_actual= obtener_menor(abiertos);
             cerrados.add(estado_actual);
-
 
             ArrayList<Posicion> vacios =buscar_vacios(estado_actual);
             for (int i=0;i< vacios.size();i++){
@@ -265,9 +275,10 @@ public class AlgoritmoA {
                 //termina
             //}
             //else{
+
                 //revisa los hijos
                 ArrayList<Estado> hijos = obtener_hijos(vacios, estado_actual);
-                //System.out.println(hijos.size() + " tamano");
+
                 for (int i=0; i<hijos.size();i++){
                     //imprimir_estado(hijos.get(i));
                     buscar_vacios(hijos.get(i));
@@ -278,7 +289,7 @@ public class AlgoritmoA {
 
                 for (int m=0; m<abiertos.size();m++){
                     System.out.println("_________________________________________");
-                    imprimir_estado(abiertos.get(m));
+                    imprimir_estado(abiertos.get(1));
                 }
 
 
