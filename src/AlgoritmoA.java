@@ -255,12 +255,12 @@ public class AlgoritmoA {
         }
     }
 
-    public void A_Star(){
+    public Estado A_Star(){
         ArrayList<Estado> cerrados= new ArrayList<>();
         ArrayList<Estado> abiertos= new ArrayList<>();
         abiertos.add(estadoInicial);
 
-        //while (!abiertos.isEmpty()){
+        while (!abiertos.isEmpty()){
             Estado estado_actual= obtener_menor(abiertos);
             cerrados.add(estado_actual);
 
@@ -271,10 +271,11 @@ public class AlgoritmoA {
             }
 
 
-            //if (goal(estado_actual)){
+            if (goal(estado_actual)){
                 //termina
-            //}
-            //else{
+                return estado_actual;
+            }
+            else{
 
                 //revisa los hijos
                 ArrayList<Estado> hijos = obtener_hijos(vacios, estado_actual);
@@ -287,14 +288,17 @@ public class AlgoritmoA {
                     //}
                 }
 
+                System.out.println("Verificar los abiertos");
                 for (int m=0; m<abiertos.size();m++){
                     System.out.println("_________________________________________");
                     imprimir_estado(abiertos.get(1));
                 }
 
 
-            //}
-        //}
+            }
+        }
+
+        return null;
 
 
     }

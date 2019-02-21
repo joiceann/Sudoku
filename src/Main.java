@@ -1,51 +1,39 @@
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Scanner;
 
 public class Main {
     public static void main( String[] args ){
 
         // Print the string "Hello, " on screen
-        System.out.println("I am saying Hello to the people below.. ");
+        System.out.println("Iniciando... ");
+
 
         // Check if a command line argument exists
-        /*if(args.length == 0)
-            System.exit(0);
+        if(args.length!=0 ){
+            String input = args[0];
+            System.out.println(input.length());
+            if (input.length() == 16){
+                System.out.println("Prueba");
+                AlgoritmoA algoritmoA = new AlgoritmoA();
+                algoritmoA.crear_EstadoInicial(input);
+                algoritmoA.A_Star();
+            }
+            else {
+                System.out.println("Sudoku invalido");
+                System.exit(0);
+            }
+        }
 
-        // Display the arguments from the command line
-        for(int counter = 0; counter < args.length; counter++){
-            System.out.println("argument index " + counter + ": " + args[counter]);
-        }*/
-        /*String tablero;
-        System.out.println("Ingrese la configuracion inicial del tablero ");
-        Scanner teclado = new Scanner(System.in);
-        tablero= teclado.nextLine();*/
+        else{
+            System.out.println("Prueba");
+            AlgoritmoA algoritmoA = new AlgoritmoA();
+            algoritmoA.crear_EstadoInicial(".4.13.4.1..4.21.");
+            algoritmoA.A_Star();
+        }
 
-        System.out.println("Prueba");
-        AlgoritmoA algoritmoA=new AlgoritmoA();
-        algoritmoA.crear_EstadoInicial(".4.13.4.1..4.21.");
-        algoritmoA.A_Star();
-        /*ArrayList<Estado> estados = algoritmoA.estado_siguiente(algoritmoA.getEstadoInicial(), 0,0);
-        System.out.println("__________________________________________________________");
-        algoritmoA.imprimir_estado(algoritmoA.getEstadoInicial());
-        System.out.println("__________________________________________________________");
-        algoritmoA.imprimir_estado(estados.get(0));
-        //System.out.println(algoritmoA.getEstadoInicial().compareTo(estados.get(0)));
-        //algoritmoA.A_Star();
+        /*System.out.println("Sudoku invalido");
+        System.exit(0);
 */
-
-
-
-        /*System.out.println("resultado" + algoritmoA.crear_EstadoInicial(".4.13.4.1..4.21."));
-        System.out.println(algoritmoA.calcular_heuristica(algoritmoA.estadoInicial, 4));
-        ArrayList<Estado> estados= algoritmoA.estado_siguiente(algoritmoA.estadoInicial, 0,0);
-        for (int i=0; i< estados.size();i++){
-            System.out.println("Estado siguiente ");
-            algoritmoA.imprimir_estado(estados.get(i));
-            System.out.println("heuristica: "+ estados.get(i).getHeuristica());
-        }*/
-
-
-
     }
-
 }
