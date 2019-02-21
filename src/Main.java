@@ -22,14 +22,27 @@ public class Main {
 
         System.out.println("Prueba");
         AlgoritmoA algoritmoA=new AlgoritmoA();
-        System.out.println("resultado" + algoritmoA.crear_EstadoInicial(".4.13.4.1..4.21."));
+        algoritmoA.crear_EstadoInicial(".4.13.4.1..4.21.");
+        algoritmoA.A_Star();
+        /*ArrayList<Estado> estados = algoritmoA.estado_siguiente(algoritmoA.getEstadoInicial(), 0,0);
+        System.out.println("__________________________________________________________");
+        algoritmoA.imprimir_estado(algoritmoA.getEstadoInicial());
+        System.out.println("__________________________________________________________");
+        algoritmoA.imprimir_estado(estados.get(0));
+        //System.out.println(algoritmoA.getEstadoInicial().compareTo(estados.get(0)));
+        //algoritmoA.A_Star();
+*/
+
+
+
+        /*System.out.println("resultado" + algoritmoA.crear_EstadoInicial(".4.13.4.1..4.21."));
         System.out.println(algoritmoA.calcular_heuristica(algoritmoA.estadoInicial, 4));
         ArrayList<Estado> estados= algoritmoA.estado_siguiente(algoritmoA.estadoInicial, 0,0);
         for (int i=0; i< estados.size();i++){
             System.out.println("Estado siguiente ");
             algoritmoA.imprimir_estado(estados.get(i));
             System.out.println("heuristica: "+ estados.get(i).getHeuristica());
-        }
+        }*/
 
 
 

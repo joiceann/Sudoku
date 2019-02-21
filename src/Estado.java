@@ -1,13 +1,22 @@
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 
-public class Estado {
+public class Estado implements Comparable<Estado>{
     int columnas=4;
     int filas=4;
     int heuristica=1000;
     int manhattan;
     int total;
+    int costo=0;
+
     ArrayList<ArrayList<Integer>> tablero = new ArrayList<ArrayList<Integer>>();
+
+    public int getCosto() {
+        return costo;
+    }
+
+    public void setCosto(int costo) {
+        this.costo = costo;
+    }
 
     public int getTotal() {
         return total;
@@ -39,5 +48,20 @@ public class Estado {
 
     public void setTablero(ArrayList<ArrayList<Integer>> tablero) {
         this.tablero = tablero;
+    }
+
+    @Override
+    public int compareTo(Estado o) {
+
+        for (int i=0; i<this.tablero.size(); i++){
+            for (int j=0; j<this.tablero.get(i).size();j++){
+                System.out.println(this.tablero.get(i).get(j));
+                System.out.println(o.getTablero().get(i).get(j));
+                if (this.tablero.get(i).get(j) != o.getTablero().get(i).get(j)){
+                    return 0;
+                }
+            }
+        }
+        return 1;
     }
 }
